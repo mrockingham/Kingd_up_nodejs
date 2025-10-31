@@ -83,8 +83,9 @@ model Variant {
   name               String
   sku                String
   retailPrice        String
-  price              Float // ✅ Add this line
+  price              Float 
   thumbnailUrl       String?
+  designFileId         Int?
   size               String?
   color              String?
   availabilityStatus String

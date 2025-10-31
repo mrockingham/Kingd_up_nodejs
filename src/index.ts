@@ -10,6 +10,8 @@ import cartRoutes from './routes/cart.routes';
 import cartItemRoutes from './routes/cartItem.routes';
 import checkoutRoutes from './routes/checkout.routes';
 
+import { handleStripeWebhook } from './controllers/checkout.controller';
+import printfulDebugRoutes from './routes/printfulDebug.routes';
 // import paymentRoutes from './routes/payment.routes';
 
 (BigInt.prototype as any).toJSON = function () {
@@ -20,6 +22,15 @@ dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 4000;
+app.get('/', (req, res) => {
+  res.send('Kingd_up Node API 🚀');
+});
+
+app.post(
+  '/stripe-webhook', 
+  express.raw({ type: 'application/json' }), 
+  handleStripeWebhook
+);
 
 app.use(cors(
   {
@@ -29,9 +40,6 @@ app.use(cors(
 ));
 app.use(express.json());
 
-app.get('/', (req, res) => {
-  res.send('Kingd_up Node API 🚀');
-});
 
 app.get("/ping", (req, res) =>{
   res.send(  "pong" );
@@ -44,6 +52,7 @@ app.use('/products', productRoutes);
 app.use('/cart', cartRoutes);
 app.use('/cart/items', cartItemRoutes);
 app.use('/checkout', checkoutRoutes);
+app.use('/debug/printful', printfulDebugRoutes);
 
 // app.use('/payment', paymentRoutes);
 
