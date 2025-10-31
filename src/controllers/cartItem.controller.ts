@@ -38,12 +38,30 @@ export const addOrUpdateCartItem = async (req: Request, res: Response): Promise<
       });
     }
 
-    const updatedCart = await prisma.cart.findUnique({
+   const cart = await prisma.cart.findUnique({
       where: { id: cartId },
-      include: { items: true },
+      include: {
+        items: {
+          include: {
+            product: true,
+            variant: true,
+          },
+        },
+      },
     });
 
-    res.status(200).json(updatedCart);
+    if (!cart) {
+ res.status(404).json({ error: 'Cart not found after update' });
+      return;
+    }
+
+    const total = cart.items.reduce((acc, item) => {
+      // Make sure item.variant exists before accessing price
+      const price = item.variant?.price ?? 0;
+      return acc + price * item.quantity;
+    }, 0);
+
+    res.status(200).json({ ...cart, total });
   } catch (error) {
     console.error('❌ Failed to add/update cart item:', error);
     res.status(500).json({ error: 'Failed to add/update cart item' });
