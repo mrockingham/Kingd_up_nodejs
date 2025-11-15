@@ -12,7 +12,9 @@ import checkoutRoutes from './routes/checkout.routes';
 
 import { handleStripeWebhook } from './controllers/checkout.controller';
 import printfulDebugRoutes from './routes/printfulDebug.routes';
-// import paymentRoutes from './routes/payment.routes';
+import contactRoutes from './routes/contact.route';
+
+
 
 (BigInt.prototype as any).toJSON = function () {
   return this.toString();
@@ -47,14 +49,15 @@ app.get("/ping", (req, res) =>{
 } )
 app.use('/auth', authRoutes);
 app.use('/orders', orderRoutes);
-app.use('/admin', adminRoutes);
+app.use('/api/admin', adminRoutes);
 app.use('/products', productRoutes);
 app.use('/cart', cartRoutes);
 app.use('/cart/items', cartItemRoutes);
 app.use('/checkout', checkoutRoutes);
 app.use('/debug/printful', printfulDebugRoutes);
+app.use('/contact', contactRoutes);
 
-// app.use('/payment', paymentRoutes);
+
 
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
