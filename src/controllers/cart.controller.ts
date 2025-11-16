@@ -63,7 +63,7 @@ export const getCartWithTotal = async (req: Request, res: Response): Promise<any
       return res.status(404).json({ error: 'Cart not found' });
     }
 
-    const total = cart.items.reduce((acc, item) => {
+    const total = cart.items.reduce((acc: number, item: any) => {
       const price = item.variant?.price ?? 0;
       return acc + price * item.quantity;
     }, 0);
