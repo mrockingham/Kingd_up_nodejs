@@ -2,10 +2,13 @@
   "name": "kingd_up_nodejs",
   "version": "1.0.0",
   "description": "kingd_up_nodejs",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "ts-node-dev --respawn --transpile-only src/index.ts"
+    "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "postbuild": "prisma generate"
   },
   "keywords": [],
   "author": "",
