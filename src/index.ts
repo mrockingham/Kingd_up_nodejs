@@ -36,7 +36,7 @@ app.post(
 
 app.use(cors(
   {
-    origin: 'https://kingd-up-apparel-git-main-michael-rockinghams-projects.vercel.app/',
+    origin: '*',
     credentials: true,
   },
 ));
