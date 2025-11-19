@@ -36,7 +36,7 @@ app.post(
 
 app.use(cors(
   {
-    origin: '*',
+    origin: 'https://kinge-up-fe.vercel.app',
     credentials: true,
   },
 ));
